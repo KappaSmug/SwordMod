@@ -1,6 +1,9 @@
 package net.kappasmug.swordmod;
 
 import com.mojang.logging.LogUtils;
+
+import net.kappasmug.swordmod.Item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -28,6 +31,8 @@ public class SwordMod
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        ModItems.register(modEventBus); // No need to create a ModItems object
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -50,6 +55,9 @@ public class SwordMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
+        if(event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(ModItems.SWORD);
+        }
 
     }
 
